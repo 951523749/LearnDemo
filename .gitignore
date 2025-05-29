@@ -1,0 +1,6 @@
+QuadTree/.*
+QuadTree/library
+QuadTree/local
+QuadTree/preview-template
+QuadTree/temp
+.DS_Store
