@@ -49,7 +49,6 @@ export default class MainScene extends Component {
         this.loopCall(1, 0.1, () => {
             this.createEnemy();
         });
-
         document.addEventListener('keydown', this.onDomKeyDown.bind(this));
         document.addEventListener('keyup', this.onDomKeyUp.bind(this));
     }
@@ -119,11 +118,21 @@ export default class MainScene extends Component {
         this.timeCount += dt;
 
         this.fire(fram);
+        // this.createEnemyInFrame(fram);
 
         this.playerMove(fram);
 
         this.quadTreeCollid(fram);
         // this.narmalCollid(fram);
+    }
+
+    private createEnemyCount: number = 0;
+    private createEnemyInFrame(frame: number) {
+        this.createEnemyCount += frame;
+        if (frame > 10) {
+            this.createEnemy();
+            frame = 0;
+        }
     }
 
     private narmalCollid(fram: number) {
@@ -223,13 +232,16 @@ export default class MainScene extends Component {
 
     private isLog: boolean = true;
     private collidingCount: number = 0;
+
+    private resultCount = 0;
     private isColliding(a: QuadTreeNode, b: QuadTreeNode): boolean {
         let count = Math.PI * 2 / 0.1478;
         let count2 = Math.PI * 2 / 0.3698;
         let count3 = count2 / count;
+        this.resultCount = count3;
 
         this.collidingCount++;
-        if (this.timeCount > 10 && this.isLog) {
+        if (this.timeCount > 10 && this.isLog && this.resultCount != 0) {
             console.log("count: ", this.collidingCount);
             this.isLog = false;
         }
